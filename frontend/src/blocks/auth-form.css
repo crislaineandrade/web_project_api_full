@@ -1,0 +1,67 @@
+.auth {
+  position: relative;
+  z-index: 1;
+
+
+}
+
+.auth__title {
+  text-align: center;
+  color: #fff;
+  justify-content: center;
+  margin-bottom: 50px;
+  font-family: 'Inter';
+  font-weight: 900;
+  font-size: 24px;
+}
+
+.auth__form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  font-family: 'Inter';
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.auth__input {
+  font-family: 'Inter';
+  font-weight: 500;
+  background-color: transparent;
+  margin: auto;
+  width: 358px;
+  color: #fff;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  margin-bottom: 30px;
+}
+
+
+.auth__submit-button {
+  font-family: 'Inter';
+  font-weight: 400;
+  font-size: 18px;
+  width: 358px;
+  margin: 216px auto 0;
+  height: 50px;
+  cursor: pointer;
+}
+
+.auth__paragraph {
+  font-family: 'Inter';
+  font-weight: 400;
+  font-size: 14px;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 80px;
+
+}
+
+.auth__link {
+  text-decoration: none;
+  color: #fff;
+  font-family: 'Inter';
+  font-weight: 400;
+  font-size: 14px;
+
+}

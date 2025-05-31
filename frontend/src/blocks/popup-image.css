@@ -1,0 +1,117 @@
+.popup-image {
+  width: 100%;
+  display: none;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  inset: 0;
+ 
+  
+  
+}
+
+.popup_opened {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  
+}
+
+.popup-image__container {
+  background-color:transparent;
+  max-width: 75vw;
+  max-height: 75vh;
+  height: auto;
+  width: auto;
+  position: relative;
+
+}
+
+.popup__container_image {
+  display: flex;
+  max-width: 75vw;
+  max-height: 75vh;
+  justify-content: center;
+  border: none;
+  position: relative;
+  height: auto;
+}
+
+.popup__container {
+  border: none;
+}
+
+.popup-image__subtitle {
+  font-family: "Inter";
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14.52px;
+  color: #fff;
+  position: absolute;
+  top: 102%;
+  left: 0;
+  margin: 0;
+  
+}
+
+.popup-image__img {
+  max-width: 100%;
+  object-fit: cover;
+}
+
+
+
+ .popup__close-button {
+  background-image: url("../images/close_Icon.png");
+  position: absolute;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  width: 45px;
+  height: 40px;
+  top: -45px; 
+  right: -35px; 
+}
+
+.popup__close-button:hover {
+  opacity: 0.6;
+}
+
+/* --------TELA 1024PX --------- */
+
+@media screen and (max-width: 1024px) {
+
+  .popup-image__img {
+    max-width: 70vw;
+    max-height: 70vh;
+    
+  }
+
+  .popup__close-button {
+    top: -50px;
+    right: -40px;
+  }
+}
+
+
+
+/* --------TELA 544PX --------- */
+
+
+
+@media screen and (max-width: 544px) {
+
+  .popup-image__img {
+    max-width: 65vw;
+    max-height: 45vh;
+    
+  }
+
+  .popup__close-button {
+    top: -45px;
+    right: -27px;
+    width: 30px;
+    height: 30px;
+  }
+}

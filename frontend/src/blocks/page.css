@@ -1,0 +1,30 @@
+body {
+  background-color: black;
+}
+
+.page {
+  background-color: #000000;
+  margin: 0 auto;
+  box-sizing: border-box;
+  font-family: "Inter", Arial, sans-serif;
+  position: relative;
+}
+
+@media screen and (max-width: 800px) {
+  .page {
+    padding: 0 30px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .page {
+    padding: 0 19px;
+  }
+}
+
+.page-section {
+  max-width: 880px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+}

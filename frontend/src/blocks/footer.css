@@ -1,0 +1,19 @@
+.footer {
+  max-width: 880px;
+  margin: auto;
+}
+
+.footer__paragraph {
+  color: #545454;
+  font-family: "Inter";
+  font-size: 1.125rem;
+  line-height: 1.36125rem;
+  font-weight: 400;
+  margin: 0;
+}
+
+@media screen and (max-width: 800px) {
+  .footer {
+    max-width: 600px;
+  }
+}

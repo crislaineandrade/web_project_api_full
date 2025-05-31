@@ -1,0 +1,73 @@
+/* TELA 1280 PX */
+
+.header {
+  max-width: 880px;
+  margin: auto;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header__content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header__logo {
+  padding: 45px 0 41px;
+  color: #ffffff;
+  max-width: 173px;
+}
+
+.header__user {
+  display: flex;
+  align-items: center;
+
+}
+
+.header__email {
+
+  color: #ffffff;
+  font-family: 'Inter';
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.header__logout {
+
+  color: #A9A9A9;
+  font-family: 'Inter';
+  font-weight: 400;
+  font-size: 18px;
+  cursor: pointer;
+  margin-left: 56px;
+  border: none;
+  background-color: transparent;
+
+}
+
+.header__line {
+  margin: 0 0 40px;
+  border-bottom: 1px solid rgba(84, 84, 84, 0.7);
+  max-width: 880px;
+}
+
+
+
+/* TELA 320PX */
+
+@media screen and (max-width: 320px) {
+  .header {
+    max-width: 320px;
+  }
+
+  .header__logo {
+    padding: 28px 0 32px;
+    color: #ffffff;
+    max-width: 126px;
+  }
+
+  .header__line {
+    margin: 0 0 42px;
+    max-width: 320px;
+  }
+}
