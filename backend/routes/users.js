@@ -9,4 +9,4 @@ router.get('/:id', getUser);
 router.post('/', createUser);
 router.patch('/me', updateProfile);
 router.patch('/me/avatar', updateAvatar);
-module.exports = router;
+module.exports = router

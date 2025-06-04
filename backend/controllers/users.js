@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const bcrypt = require('bcryptjs')
 
 module.exports.getAllUsers = (req, res) => {
   User.find({})
@@ -37,21 +38,38 @@ module.exports.getUser = (req, res) => {
     });
 };
 module.exports.createUser = (req, res) => {
-  const { name, about, avatar } = req.body;
-  User.create({ name, about, avatar })
-    .then((user) => {
+  //TODO: criar o hash de senha
+  console.log(req.body)
+
+  const { name, about, avatar, email, password } = req.body;
+  bcrypt.hash(password, 10)
+
+
+  .then(hash => User.create({
+    name,
+    about,
+    avatar,
+    email,
+    password: hash
+  }))
+
+  .then((user) => {
+    console.log('entrou')
       if (!user) {
-        res.status(404).send({ message: 'Falha ao criar usuário' });
+        return res.status(404).send({ message: 'Falha ao criar usuário' });
       }
+
       res.send({ data: user });
     })
-    .catch((err) => {
-      if (err.name === 'FalhaAoCriarUsuario') {
-        return res.status(400).send({ message: err.message });
-      }
-      return res.status(500).send({ message: 'Erro interno do servidor' });
-    });
+  .catch((err) => {
+    if (err.name === 'FalhaAoCriarUsuario') {
+      return res.status(400).send({ message: err.message });
+    }
+    return res.status(500).send({ message: 'Erro interno do servidor' });
+  });
 };
+
+
 module.exports.updateProfile = (req, res) => {
   const userId = req.user._id;
   const { name, about } = req.body;
