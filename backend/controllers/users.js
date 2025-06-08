@@ -56,7 +56,7 @@ module.exports.createUser = (req, res) => {
   .then((user) => {
     console.log('entrou')
       if (!user) {
-        return res.status(404).send({ message: 'Falha ao criar usuário' });
+        return res.status(404).send({ message: 'Falha ao criar usuário', });
       }
 
       res.send({ data: user });
@@ -65,7 +65,7 @@ module.exports.createUser = (req, res) => {
     if (err.name === 'FalhaAoCriarUsuario') {
       return res.status(400).send({ message: err.message });
     }
-    return res.status(500).send({ message: 'Erro interno do servidor' });
+    return res.status(500).send({ message: 'Erro interno do servidor', error: err });
   });
 };
 
