@@ -1,14 +1,21 @@
-import { CurrentUserContext } from '../../../../../../contexts/CurrentUserContext';
+import { CurrentUserContext} from '../../../../../../contexts/CurrentUserContext.js';
+import { CurrentTokenContext } from '../../../../../../contexts/CurrentTokenContext.js';
 import { useState, useContext } from 'react';
+
 
 function EditAvatar() {
   const userContext = useContext(CurrentUserContext);
+
+  const tokenContext = useContext(CurrentTokenContext)
+
   const { handleUpdateAvatar } = userContext;
 
   const [avatar, setAvatar] = useState();
   function handleChangeAvatar(e) {
     setAvatar(e.target.value);
   }
+
+
 
   const handleSubmit = (e) => {
     e.preventDefault();

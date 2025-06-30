@@ -40,15 +40,6 @@ class Auth{
   }
 
 
-  getUserInfo(token) {
-    return fetch(`${this.baseUrl}/users/me`, {
-      headers: {
-        ...this.headers,
-        Authorization: `Bearer ${token}`
-      },
-
-    }).then(this._handleServerResponse);
-  }
 
   // tokenValidate(token, email) {
   //   return fetch(`${this.baseUrl}/users/me`, {
@@ -71,7 +62,7 @@ class Auth{
 
 
 const auth = new Auth({
-  baseUrl: 'https://se-register-api.en.tripleten-services.com/v1',
+  baseUrl: 'http://localhost:3001/auth',
   headers: {
     "Content-Type": "application/json",
   }

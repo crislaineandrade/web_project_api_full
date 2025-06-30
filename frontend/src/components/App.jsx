@@ -11,8 +11,11 @@ import ProtectedRoute from './Main/components/ProtectedRoute';
 
 import auth from '../utils/auth';
 import InfoTooltip from './Main/components/Popup/components/InfoTooltip/InfoTooltip';
+import { CurrentTokenContext } from '../contexts/CurrentTokenContext';
+
 
 function App() {
+  const[token, setToken] = useState(localStorage.getItem('jwt') || '')
   const [cards, setCards] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isSucceed, setIsSucceed] = useState(false);
@@ -21,28 +24,26 @@ function App() {
 
   let navigate = useNavigate();
 
+
   useEffect(() => {
-    if (!isLoggedIn) return;
+    if (!isLoggedIn || !token) return;
 
-    function getCards() {
-      api
-        .getCards()
-        .then((card) => {
-          setCards(card);
-        })
-        .catch((err) => {
-          console.error('Erro ao buscar cards:', err);
-        });
-    }
+    api.getCards(token) // passa o token aqui
+    .then((response) => {
+      const cardsData = response.data ?? response;
+      setCards(cardsData);
+    })
+    .catch((err) => {
+      console.error('Erro ao buscar cards:', err);
+    });
+}, [isLoggedIn, token]);
 
-    getCards();
-  }, [isLoggedIn]);
 
   async function handleCardLike(card) {
     const isLiked = card.isLiked;
 
     await api
-      .handleLikeAction(card._id, isLiked)
+      .handleLikeAction(card._id, isLiked, token)
       .then((newCard) => {
         setCards((state) =>
           state.map((currentCard) =>
@@ -55,7 +56,7 @@ function App() {
 
   async function handleCardDelete(card) {
     await api
-      .deleteCard(card._id)
+      .deleteCard(card._id, token)
       .then(() => {
         setCards((novo) =>
           novo.filter((deleteCard) => deleteCard._id !== card._id)
@@ -80,25 +81,66 @@ function App() {
 
   const [currentUser, setCurrentUser] = useState({});
 
-  useEffect(() => {
-    const token = localStorage.getItem('jwt');
 
-    if (token) {
-      auth
-        .getUserInfo(token)
-        .then((userInfo) => {
-          setCurrentUser(userInfo);
-          setIsLoggedIn(true);
-        })
-        .catch((err) => {
-          console.error('Erro ao buscar usuário:', err);
-          setIsLoggedIn(false);
-        })
-        .finally(() => {
-          setIsCheckingToken(false);
-        });
+
+
+  function handleUpdateToken(token) {
+    localStorage.setItem('jwt', token);
+    setToken(token)
+
+
+
+  }
+
+  function handleDeleteToken() {
+    localStorage.removeItem('jwt');
+    setToken(null)
+
+
+  }
+
+  useEffect(() => {
+
+    const storedToken = localStorage.getItem('jwt')
+
+    if (storedToken) {
+      setToken(storedToken)
+
+      api.getUser(storedToken)
+      .then((userInfo) => {
+        console.log('user Info', userInfo);
+        setCurrentUser(userInfo.data ?? userInfo);
+        setIsLoggedIn(true);
+      })
+      .catch((err) => {
+        console.error('Erro ao verificar token:', err);
+        setIsLoggedIn(false);
+      })
+      .finally(() => {
+        setIsCheckingToken(false);
+      });
+
+
+
+
+      // auth.getUserInfo(storedToken)
+      // .then((userInfo) => {
+
+      //   api.getUserInfo
+
+      //   console.log('user Info', userInfo)
+      //   setCurrentUser(userInfo.data ?? userInfo);
+      //   setIsLoggedIn(true);
+      // })
+      // .catch((err) => {
+      //   console.error('Erro ao verificar token:', err);
+      //   setIsLoggedIn(false);
+      // })
+      // .finally(() => {
+      //   setIsCheckingToken(false);
+      // });
     } else {
-      setIsCheckingToken(false);
+       setIsCheckingToken(false);
     }
   }, []);
 
@@ -106,7 +148,7 @@ function App() {
 
   const handleUpdateUser = (data) => {
     api
-      .editProfile(data.name, data.about)
+      .editProfile(data.name, data.about, token)
       .then((newData) => {
         setCurrentUser(newData);
         handleClosePopup();
@@ -115,14 +157,14 @@ function App() {
   };
 
   function handleUpdateAvatar(data) {
-    api.editAvatar(data).then((userAvatar) => {
+    api.editAvatar(data, token).then((userAvatar) => {
       setCurrentUser(userAvatar);
       handleClosePopup();
     });
   }
 
   function handleGetAvatar() {
-    api.getAvatar().then((userData) => {
+    api.getAvatar(token).then((userData) => {
       setCurrentUser((prevUser) => ({
         ...prevUser,
         avatar: userData.avatar,
@@ -132,7 +174,7 @@ function App() {
 
   function handleAddPlaceSubmit(data) {
     api
-      .addNewCard(data.nameCard, data.linkCard)
+      .addNewCard(data.nameCard, data.linkCard, token)
       .then((newCard) => {
         setCards([newCard, ...cards]);
         handleClosePopup();
@@ -159,24 +201,35 @@ function App() {
   }
 
   function login(email, password) {
+    console.log(email, password)
     auth
       .login(email, password)
       .then((data) => {
         localStorage.setItem('jwt', data.token);
+        setToken(data.token)
         setIsLoggedIn(true);
-
-        return api.getAvatar().then((userData) => {
-          setCurrentUser({
-            ...userData,
-            email: currentUser?.email || email,
-          });
-          navigate('/');
-        });
+        return api.getUserInfo(data.token)
+      })
+      .then((userInfo) => {
+        setCurrentUser(userInfo.data ?? userInfo)
+        navigate('/')
       })
       .catch((err) => {
-        console.log(err);
-      });
-  }
+        console.error('Erro no login:', err)
+      })
+
+  //       return api.getAvatar().then((userData) => {
+  //         setCurrentUser({
+  //           ...userData,
+  //           email: currentUser?.email || email,
+  //         });
+  //         navigate('/');
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+   }
 
   function handleLogOut() {
     localStorage.removeItem('jwt');
@@ -187,6 +240,12 @@ function App() {
 
   return (
     <>
+    <CurrentTokenContext.Provider
+    value={{
+      token,
+      handleUpdateToken,
+      handleDeleteToken,
+    }}>
       <CurrentUserContext.Provider
         value={{
           currentUser,
@@ -245,7 +304,13 @@ function App() {
         </Routes>
 
         <Footer />
+
       </CurrentUserContext.Provider>
+
+
+
+    </CurrentTokenContext.Provider>
+
     </>
   );
 }
