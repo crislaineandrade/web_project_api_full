@@ -28,7 +28,7 @@ function App() {
   useEffect(() => {
     if (!isLoggedIn || !token) return;
 
-    api.getCards(token) // passa o token aqui
+    api.getCards(token)
     .then((response) => {
       const cardsData = response.data ?? response;
       setCards(cardsData);
@@ -40,14 +40,15 @@ function App() {
 
 
   async function handleCardLike(card) {
-    const isLiked = card.isLiked;
+    const isLiked = card.likes.length;
 
     await api
       .handleLikeAction(card._id, isLiked, token)
       .then((newCard) => {
+        const updatedCard = newCard.data
         setCards((state) =>
           state.map((currentCard) =>
-            currentCard._id === card._id ? newCard : currentCard
+            currentCard._id === card._id ? updatedCard : currentCard
           )
         );
       })
@@ -108,7 +109,6 @@ function App() {
 
       api.getUser(storedToken)
       .then((userInfo) => {
-        console.log('user Info', userInfo);
         setCurrentUser(userInfo.data ?? userInfo);
         setIsLoggedIn(true);
       })
@@ -120,25 +120,6 @@ function App() {
         setIsCheckingToken(false);
       });
 
-
-
-
-      // auth.getUserInfo(storedToken)
-      // .then((userInfo) => {
-
-      //   api.getUserInfo
-
-      //   console.log('user Info', userInfo)
-      //   setCurrentUser(userInfo.data ?? userInfo);
-      //   setIsLoggedIn(true);
-      // })
-      // .catch((err) => {
-      //   console.error('Erro ao verificar token:', err);
-      //   setIsLoggedIn(false);
-      // })
-      // .finally(() => {
-      //   setIsCheckingToken(false);
-      // });
     } else {
        setIsCheckingToken(false);
     }
@@ -201,7 +182,6 @@ function App() {
   }
 
   function login(email, password) {
-    console.log(email, password)
     auth
       .login(email, password)
       .then((data) => {
@@ -217,18 +197,6 @@ function App() {
       .catch((err) => {
         console.error('Erro no login:', err)
       })
-
-  //       return api.getAvatar().then((userData) => {
-  //         setCurrentUser({
-  //           ...userData,
-  //           email: currentUser?.email || email,
-  //         });
-  //         navigate('/');
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
    }
 
   function handleLogOut() {

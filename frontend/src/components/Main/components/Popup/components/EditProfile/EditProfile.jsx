@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react';
-import { CurrentUserContext } from '../../../../../../contexts/CurrentUserContext';
+import { CurrentUserContext } from '../../../../../../contexts/CurrentUserContext.js';
+import { CurrentTokenContext } from '../../../../../../contexts/CurrentTokenContext.js';
 
 function EditProfile() {
   const userContext = useContext(CurrentUserContext);
@@ -54,7 +55,7 @@ function EditProfile() {
         />
         <span className="ocupation-error popup__input_type_error"></span>
 
-        <button type="submit" className="popup__save-button form__submit" on>
+        <button type="submit" className="popup__save-button form__submit">
           Salvar
         </button>
       </fieldset>

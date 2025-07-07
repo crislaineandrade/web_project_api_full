@@ -1,7 +1,9 @@
 import ImagePopup from '../ImagePopup/ImagePopup';
 import deleteIcon from '../../../../../../images/Trash.png';
+import { useState } from 'react';
 
 function Card(props) {
+  // const [cardLikeButtonClassName, setCardLikeButtonClassName] = useState('elements__button-image-like')
   const { card, handleOpenPopup, onCardLike, onCardDelete } = props;
   const { name, link } = card;
   const imageComponent = {
@@ -10,6 +12,7 @@ function Card(props) {
   };
 
   function handleLikeClick() {
+    console.log('card:', card)
     onCardLike(card);
   }
 
@@ -17,9 +20,16 @@ function Card(props) {
     onCardDelete(card);
   }
 
-  const cardLikeButtonClassName = `elements__button-image-like ${
-    card.isLiked ? 'elements__button-image-like_isActive' : ''
-  }`;
+  // if (card.likes.length) {
+    // setCardLikeButtonClassName(card.likes.length ?'elements__button-image-like_isActive': 'elements__button-image-like')
+    const cardLikeButtonClassName = card.likes.length ?'elements__button-image-like elements__button-image-like_isActive': 'elements__button-image-like'
+
+
+  // }else {
+  //   setCardLikeButtonClassName('elements__button-image-like')
+
+  // }
+
   return (
     <li className="elements__card">
       <img
