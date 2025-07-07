@@ -3,8 +3,6 @@ const JWT = process.env.JWT
 
 export const auth = (req, res, next) => {
   const {authorization} = req.headers
-  console.log(`aqui esta o ${authorization}`)
-
 
   if (!authorization || !authorization.startsWith('Bearer ')) {
 

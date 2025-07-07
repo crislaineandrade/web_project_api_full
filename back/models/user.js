@@ -46,12 +46,9 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.statics.findUserByCredentials = function findUserByCredentials(email, password) {
-  // console.log(email,password)
 
   return this.findOne({ email }).select('+password')
     .then((user) => {
-      console.log('achado')
-      console.log(user)
       // Se o usuário não for encontrado, rejeita a promessa com erro
       if (!user) {
         return Promise.reject(new Error('Usuário não encontrado'));

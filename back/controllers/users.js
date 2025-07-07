@@ -31,7 +31,6 @@ export function getUser(req, res) {
       throw error;
     })
     .then((user) => {
-      console.log(user)
       return res.send({ data: user });
     })
     .catch((err) => {
@@ -42,14 +41,11 @@ export function getUser(req, res) {
     });
 }
 export function createUser(req, res) {
-  console.log('Entrou no createUser');
-
   const {
     name, about, avatar, email, password,
   } = req.body;
   bcrypt.hash(password, 10)
     .then((hash) => {
-      console.log('HASH GERADO:', hash);
       return User.create({
         name,
         about,
@@ -60,16 +56,11 @@ export function createUser(req, res) {
     })
 
     .then((user) => {
-      console.log('entrou');
-      // if (!user) {
-      //   return res.status(404).send({ message: 'Falha ao criar usuário', });
-      // }
 
       res.send({ data: user });
     })
 
     .catch((err) => {
-      console.log('ENTROU NO CATCH');
       console.error(err);
 
       if (err.name === 'ValidationError') {
@@ -115,6 +106,8 @@ export function updateAvatar(req, res) {
 
 export function login(req, res) {
   const { email, password } = req.body;
+  console.log('Tentando login com:', email, password);
+
   return User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, 'chave-secreta', { expiresIn: '7d' });

@@ -31,24 +31,12 @@ export function authorizeUser(req, res) {
   const {email, password} = req.body
     return User.findUserByCredentials(email, password)
     .then((user) => {
-      console.log(user)
-      console.log('logando')
-      // const token = jwt.sign({_id: user._id}, process.env.JWT, {expiresIn: '7d'})
+      const token = jwt.sign({_id: user._id}, process.env.JWT, {expiresIn: '7d'})
 
-      return jwt.sign({_id: user._id}, process.env.JWT, {expiresIn: '7d'})
-
-
-
-
-
-    })
-
-    .then((token) => {
       return res.send({token})
 
-
-
     })
+
 
     .catch((err) => {
       console.log(err)
@@ -70,23 +58,4 @@ export function checkMe(req, res) {
       res.status(err.statusCode || 500).send({ message: err.message });
     });
 
-
-
-  // const {authorization} = req.headers
-  //   console.log(`aqui esta o ${authorization}`)
-  //   if (!authorization || !authorization.startsWith('Bearer ')) {
-  //     const error = new Error('Acesso proibido: Token não encontrado.')
-  //     error.statusCode = 403;
-  //     throw error
-  //   }
-  //   const token = authorization.replace('Bearer ', '')
-  //   try {
-  //     const payload = jwt.verify(token, JWT)
-  //     req.user = payload
-  //     return res.json(payload)
-  //   } catch (err) {
-  //     const error = new Error('Acesso proibido: Token inválido.')
-  //     err.statusCode = 403
-  //     return res.status(403).send({message: 'Acesso proibido: Token inválido.' })
-  //   }
 }

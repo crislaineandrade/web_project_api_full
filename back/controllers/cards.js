@@ -2,12 +2,7 @@ import Card from '../models/card.js';
 
 export function getCards(req, res) {
    Card.find({})
-    // .orFail(() => {
-    //   const error = new Error('Erro ao encontrar cartões');
-    //   error.name = 'FalhaAoEncontrarCartoes';
-    //   error.statusCode = 404;
-    //   throw error;
-    // })
+
     .then((card) => res.send({ data: card }))
     .catch((err) => {
       if (err.name === 'FalhaAoEncontrarCartoes') {
