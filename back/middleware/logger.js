@@ -16,7 +16,7 @@ const __dirname = import.meta.dirname
 //   fs.writeFileSync(path.join(__dirname,'..', 'logs/request.log'), "")
 
 // }
-const requestLogStream = fs.createWriteStream(path.join(__dirname,'..', 'logs/request.log'), { flags: 'a' });
+const requestLogStream = fs.createWriteStream(path.join(__dirname,'..', 'logs/request.log'), { flags: 'a', emitClose:false });
 
 
 
