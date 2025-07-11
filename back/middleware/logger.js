@@ -5,7 +5,7 @@ import path from 'path';
 fs.readFile(path.join('./logs/request.log'), (error, data)=>
 {
   if (error) {
-    fs.writeFileSync(path.join('./logs/request.log'))
+    fs.writeFileSync(path.join('./logs/request.log'), "")
   }
 
 })
