@@ -1,6 +1,5 @@
 const API_URL = import.meta.env.VITE_BACK
 
-
 if (import.meta.env.MODE !== 'production') {
   console.log('URL da API usada:', API_URL);
 }
