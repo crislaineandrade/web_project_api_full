@@ -2,14 +2,21 @@ import morgan from 'morgan';
 import fs from 'fs';
 import path from 'path';
 
-fs.readFile(path.join('./logs/request.log'), (error, data)=>
+try {
+  fs.readFile(path.join('./logs/request.log'), (error, data)=>
 {
   if (error) {
     fs.writeFileSync(path.join('./logs/request.log'), "")
   }
 
 })
+
+}catch(error) {
+  fs.writeFileSync(path.join('./logs/request.log'), "")
+
+}
 const requestLogStream = fs.createWriteStream(path.join('./logs/request.log'), { flags: 'a' });
+
 
 
 export const requestLogger = morgan((tokens, req, res) => {
