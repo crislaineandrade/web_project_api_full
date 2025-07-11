@@ -6,7 +6,7 @@ const __dirname = import.meta.dirname
 
 
 
-open(path.join(__dirname,'..', 'logs/request.log'), 'wx', (err, fd) => {
+open(path.join(__dirname,'..', 'logger/request.log'), 'wx', (err, fd) => {
   if (err) {
     if (err.code === 'EEXIST') {
       console.error('myfile already exists');
@@ -22,7 +22,7 @@ open(path.join(__dirname,'..', 'logs/request.log'), 'wx', (err, fd) => {
     });
 
 });
-const requestLogStream = fs.createWriteStream(path.join(__dirname,'..', 'logs/request.log'), { flags: 'a', emitClose:false });
+const requestLogStream = fs.createWriteStream(path.join(__dirname,'..', 'logger/request.log'), { flags: 'a', emitClose:false });
 
 
 
