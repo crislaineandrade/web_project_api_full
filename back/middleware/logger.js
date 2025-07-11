@@ -3,19 +3,19 @@ import fs from 'fs';
 import path from 'path';
 const __dirname = import.meta.dirname
 
-try {
-  fs.readFile(path.join(__dirname,'..', 'logs/request.log'), (error, data)=>
-{
-  if (error) {
-    fs.writeFileSync(path.join(__dirname,'..', 'logs/request.log'), "")
-  }
+// try {
+//   fs.readFile(path.join(__dirname,'..', 'logs/request.log'), (error, data)=>
+// {
+//   if (error) {
+//     fs.writeFileSync(path.join(__dirname,'..', 'logs/request.log'), "")
+//   }
 
-})
+// })
 
-}catch(error) {
-  fs.writeFileSync(path.join(__dirname,'..', 'logs/request.log'), "")
+// }catch(error) {
+//   fs.writeFileSync(path.join(__dirname,'..', 'logs/request.log'), "")
 
-}
+// }
 const requestLogStream = fs.createWriteStream(path.join(__dirname,'..', 'logs/request.log'), { flags: 'a' });
 
 
