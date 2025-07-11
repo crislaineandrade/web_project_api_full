@@ -1,21 +1,27 @@
 import morgan from 'morgan';
 import fs from 'fs';
 import path from 'path';
+import { open, close } from 'node:fs';
 const __dirname = import.meta.dirname
 
-// try {
-//   fs.readFile(path.join(__dirname,'..', 'logs/request.log'), (error, data)=>
-// {
-//   if (error) {
-//     fs.writeFileSync(path.join(__dirname,'..', 'logs/request.log'), "")
-//   }
 
-// })
 
-// }catch(error) {
-//   fs.writeFileSync(path.join(__dirname,'..', 'logs/request.log'), "")
+open(path.join(__dirname,'..', 'logs/request.log'), 'wx', (err, fd) => {
+  if (err) {
+    if (err.code === 'EEXIST') {
+      console.error('myfile already exists');
+      return;
+    }
 
-// }
+    throw err;
+  }
+
+
+    close(fd, (err) => {
+      if (err) throw err;
+    });
+
+});
 const requestLogStream = fs.createWriteStream(path.join(__dirname,'..', 'logs/request.log'), { flags: 'a', emitClose:false });
 
 
